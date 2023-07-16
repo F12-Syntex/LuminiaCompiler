@@ -1,4 +1,6 @@
-package com.luminia.lexical_analysis;
+package com.luminia.expressions;
+
+import com.luminia.statements.Statement;
 
 public class EseqExpression extends Expression{
 

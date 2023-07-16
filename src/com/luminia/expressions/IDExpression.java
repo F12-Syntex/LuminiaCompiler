@@ -1,4 +1,4 @@
-package com.luminia.lexical_analysis;
+package com.luminia.expressions;
 
 public class IDExpression extends Expression{
 

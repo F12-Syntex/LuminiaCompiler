@@ -1,4 +1,6 @@
-package com.luminia.lexical_analysis;
+package com.luminia.statements;
+
+import com.luminia.expressions.Expression;
 
 public class AssignStatement extends Statement {
 

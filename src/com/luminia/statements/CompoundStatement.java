@@ -1,4 +1,4 @@
-package com.luminia.lexical_analysis;
+package com.luminia.statements;
 
 public class CompoundStatement extends Statement{
 
