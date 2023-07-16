@@ -1,6 +1,6 @@
 package com.luminia.lexical_analysis;
 
-public class CompoundStatement {
+public class CompoundStatement extends Statement{
 
     private Statement statement1;
     private Statement statement2;

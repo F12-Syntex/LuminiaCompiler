@@ -1,5 +1,5 @@
 package com.luminia.lexical_analysis;
 
-public class PrintStatement {
+public abstract class ExpressionList {
     
 }
