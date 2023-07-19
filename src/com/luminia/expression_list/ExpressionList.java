@@ -1,4 +1,4 @@
-package com.luminia.expressions;
+package com.luminia.expression_list;
 
 public abstract class ExpressionList {
     

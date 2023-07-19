@@ -1,6 +1,6 @@
 package com.luminia.statements;
 
-import com.luminia.expressions.ExpressionList;
+import com.luminia.expression_list.ExpressionList;
 
 public class PrintStatement extends Statement {
 

@@ -1,4 +1,6 @@
-package com.luminia.expressions;
+package com.luminia.expression_list;
+
+import com.luminia.expressions.Expression;
 
 public class PairExpressionList extends ExpressionList {
     
