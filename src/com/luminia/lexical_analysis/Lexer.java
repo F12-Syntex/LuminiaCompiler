@@ -1,5 +1,10 @@
 package com.luminia.lexical_analysis;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+
 public class Lexer {
 
     private final String text;
@@ -28,13 +33,13 @@ public class Lexer {
         position++;
     }
 
-    public SyntexToken nextToken(){
+    public SyntaxToken nextToken(){
         //number
         //+ - * / ( )  
         //white space
 
         if(position >= text.length()){
-            return new SyntexToken(position, "\0", SyntexType.EndOfFileToken, null);
+            return new SyntaxToken(position, "\0", SyntaxType.EndOfFileToken, null);
         }
 
         if(Character.isDigit(this.current())){
@@ -46,7 +51,7 @@ public class Lexer {
             String text = this.text.substring(start, end);
 
             int value = Integer.parseInt(text);
-            return new SyntexToken(start, text, SyntexType.NumberToken, value);
+            return new SyntaxToken(start, text, SyntaxType.NumberToken, value);
         }
 
         if(Character.isWhitespace(this.current())){
@@ -57,37 +62,85 @@ public class Lexer {
             final int end = position;
             String text = this.text.substring(start, end);
 
-            return new SyntexToken(start, text, SyntexType.WhiteSpaceToken, null);
+            return new SyntaxToken(start, text, SyntaxType.WhiteSpaceToken, null);
         }
 
         switch(this.current()){
             case '+': {
                 String text = Character.toString(this.current());
-                return new SyntexToken(position++, text, SyntexType.PlusToken, null);
+                return new SyntaxToken(position++, text, SyntaxType.PlusToken, null);
             }
             case '-': {
                 String text = Character.toString(this.current());
-                return new SyntexToken(position++, text, SyntexType.MinusToken, null);
+                return new SyntaxToken(position++, text, SyntaxType.MinusToken, null);
             }
             case '*': {
                 String text = Character.toString(this.current());
-                return new SyntexToken(position++, text, SyntexType.StarToken, null);
+                return new SyntaxToken(position++, text, SyntaxType.StarToken, null);
             }
             case '/': {
                 String text = Character.toString(this.current());
-                return new SyntexToken(position++, text, SyntexType.SlashToken, null);
+                return new SyntaxToken(position++, text, SyntaxType.SlashToken, null);
             }
             case '(': {
                 String text = Character.toString(this.current());
-                return new SyntexToken(position++, text, SyntexType.OpenParenthesisToken, null);
+                return new SyntaxToken(position++, text, SyntaxType.OpenParenthesisToken, null);
             }
             case ')': {
                 String text = Character.toString(this.current());
-                return new SyntexToken(position++, text, SyntexType.CloseParenthesisToken, null);
+                return new SyntaxToken(position++, text, SyntaxType.CloseParenthesisToken, null);
             }
         }
 
-        return new SyntexToken(position++, text.substring(position - 1, 1), SyntexType.BadToken, text);
+        return new SyntaxToken(position++, text.substring(position - 1, 1), SyntaxType.BadToken, text);
 
     }
+
+
+    /*
+     * a consumer that takes a token and returns a token untill the token is an end of file token
+     * a new lexer is created for each call
+     * @param consumer the consumer that takes a token and returns a token
+     */
+    public void tokenize(Consumer<SyntaxToken> consumer){
+        Lexer lexer = new Lexer(text);
+        SyntaxToken token;
+        do{
+            token = lexer.nextToken();
+            consumer.accept(token);
+        }while(token.getType() != SyntaxType.EndOfFileToken);
+    }
+
+        /*
+     * a consumer that takes a token and returns a token untill the token is an end of file token
+     * a new lexer is created for each call
+     * @param consumer the consumer that takes a token and returns a token
+     * @param predicate the predicate that tests the token
+     */
+    public void tokenize(Consumer<SyntaxToken> consumer, Predicate<SyntaxToken> predicate){
+        Lexer lexer = new Lexer(text);
+        SyntaxToken token;
+        do{
+            token = lexer.nextToken();
+            boolean test = predicate.test(token);
+            if(test){
+                consumer.accept(token);
+            }
+        }while(token.getType() != SyntaxType.EndOfFileToken);
+    }
+
+    /**
+     * gets all the tokens in the text, ignoring white space and bad tokens and returns them in a list
+     * tokens will be added untill the end of file token is reached
+     * @return an array of tokens
+     */
+    public SyntaxToken[] getTokens(){
+        List<SyntaxToken> tokens = new ArrayList<>();
+        this.tokenize(tokens::add, (token) -> {
+            return token.getType() != SyntaxType.WhiteSpaceToken && token.getType() != SyntaxType.BadToken;
+        });
+        return tokens.toArray(new SyntaxToken[tokens.size()]);
+    }
+
+
 }

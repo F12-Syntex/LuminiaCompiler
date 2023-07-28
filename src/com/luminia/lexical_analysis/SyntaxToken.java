@@ -1,12 +1,15 @@
 package com.luminia.lexical_analysis;
 
+import java.util.Collections;
 import java.util.Optional;
 
-public class SyntexToken {
+import com.luminia.parser.SyntexNode;
+
+public class SyntaxToken extends SyntexNode{
 
     private int position;
     private String text;
-    private SyntexType type;
+    private SyntaxType type;
     private Object value;
 
     /**
@@ -16,7 +19,7 @@ public class SyntexToken {
      * @param type the type of the token
      * @param value the value of the token current types
      */
-    public SyntexToken(int position, String text, SyntexType type, Object value) {
+    public SyntaxToken(int position, String text, SyntaxType type, Object value) {
         this.position = position;
         this.text = text;
         this.type = type;
@@ -31,12 +34,18 @@ public class SyntexToken {
         return text;
     }
 
-    public SyntexType getType() {
+    public Optional<Object> getValue() {
+        return Optional.ofNullable(value);
+    }
+
+    @Override
+    public SyntaxType getType() {
         return type;
     }
 
-    public Optional<Object> getValue() {
-        return Optional.ofNullable(value);
+    @Override
+    public Iterable<SyntexNode> getChildren() {
+        return Collections.emptyList();
     }
     
 }
