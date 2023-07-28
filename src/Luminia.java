@@ -1,21 +1,18 @@
 import com.luminia.lexical_analysis.Lexer;
-import com.luminia.lexical_analysis.SyntaxToken;
-import com.luminia.lexical_analysis.SyntaxType;
+import com.luminia.parser.Parser;
+import com.luminia.parser.expressions.ExpressionSyntax;
+import com.luminia.utils.Beautify;
 
 public class Luminia {
     public static void main(String[] args) {
         
-        Lexer lexer = new Lexer("3122 + 123 * 123");
+        String text = "1 + 3 - 1";
 
-        while(true){
-            SyntaxToken token = lexer.nextToken();
-            if(token.getType() == SyntaxType.EndOfFileToken){
-                break;
-            }
-            System.out.print(token.getType() + " \"" + token.getText() + "\"");
-            token.getValue().ifPresent(value -> System.out.print("(" + value + ")"));
-            System.out.println();
-        }
+        Lexer lexer = new Lexer(text);
+        Parser parser = new Parser(lexer);
+        
+        ExpressionSyntax expression = parser.parse();
 
+        Beautify.prettyPrint(expression, parser.getText());
     }
 }

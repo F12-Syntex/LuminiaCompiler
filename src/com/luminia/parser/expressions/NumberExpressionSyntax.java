@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.luminia.lexical_analysis.SyntaxToken;
 import com.luminia.lexical_analysis.SyntaxType;
-import com.luminia.parser.SyntexNode;
+import com.luminia.parser.SyntaxNode;
 
 public class NumberExpressionSyntax extends ExpressionSyntax{
 
@@ -16,7 +16,7 @@ public class NumberExpressionSyntax extends ExpressionSyntax{
 
     @Override
     public SyntaxType getType() {
-        return SyntaxType.NumberToken;
+        return SyntaxType.NumberExpression;
     }
 
     public SyntaxToken getNumberToken() {
@@ -24,7 +24,7 @@ public class NumberExpressionSyntax extends ExpressionSyntax{
     }
 
     @Override
-    public Iterable<SyntexNode> getChildren() {
+    public Iterable<SyntaxNode> getChildren() {
         return List.of(this.numberToken);
     }
     

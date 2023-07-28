@@ -3,9 +3,9 @@ package com.luminia.lexical_analysis;
 import java.util.Collections;
 import java.util.Optional;
 
-import com.luminia.parser.SyntexNode;
+import com.luminia.parser.SyntaxNode;
 
-public class SyntaxToken extends SyntexNode{
+public class SyntaxToken extends SyntaxNode{
 
     private int position;
     private String text;
@@ -44,7 +44,7 @@ public class SyntaxToken extends SyntexNode{
     }
 
     @Override
-    public Iterable<SyntexNode> getChildren() {
+    public Iterable<SyntaxNode> getChildren() {
         return Collections.emptyList();
     }
     

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.luminia.lexical_analysis.SyntaxToken;
 import com.luminia.lexical_analysis.SyntaxType;
-import com.luminia.parser.SyntexNode;
+import com.luminia.parser.SyntaxNode;
 
 public class BinaryExpressionSyntax extends ExpressionSyntax{
 
@@ -54,7 +54,7 @@ public class BinaryExpressionSyntax extends ExpressionSyntax{
 
 
     @Override
-    public Iterable<SyntexNode> getChildren() {
+    public Iterable<SyntaxNode> getChildren() {
         return List.of(this.left, this.operatorToken, this.right);
     }
 }

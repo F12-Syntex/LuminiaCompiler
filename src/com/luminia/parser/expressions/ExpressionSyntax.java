@@ -1,7 +1,7 @@
 package com.luminia.parser.expressions;
 
-import com.luminia.parser.SyntexNode;
+import com.luminia.parser.SyntaxNode;
 
-public abstract class ExpressionSyntax extends SyntexNode{
+public abstract class ExpressionSyntax extends SyntaxNode{
 
 }

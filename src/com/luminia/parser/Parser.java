@@ -23,6 +23,12 @@ public class Parser {
         this.tokens = this.lexer.getTokens();
     }
 
+    public Parser(Lexer lexer) {
+        this.text = lexer.getText();
+        this.lexer = new Lexer(text);
+        this.tokens = this.lexer.getTokens();
+    }
+
     /**
      * peek at the token which is at the current position plus the offset
      * @param offset
@@ -73,6 +79,14 @@ public class Parser {
         }
 
         return left;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public Lexer getLexer() {
+        return lexer;
     }
 
 }
