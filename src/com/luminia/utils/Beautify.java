@@ -7,14 +7,13 @@ import com.luminia.parser.SyntaxNode;
 
 public class Beautify {
 
-    public static void prettyPrint(SyntaxNode node, String text){
-        System.out.println("┌── parsing (" + text + ")");
+    public static void prettyPrint(SyntaxNode node){
         Beautify.prettyPrint(node, "", true, true);
     }
 
     public static void prettyPrint(SyntaxNode node, String indent, boolean isLastChild, boolean root){
 
-        String marker = !root ? (isLastChild ? "└──" : "├──") : "";
+        String marker = !root ? (isLastChild ? "└──" : "├──") : "──";
 
         System.out.print(indent);
         System.out.print(marker);
