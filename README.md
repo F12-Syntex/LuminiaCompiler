@@ -1,6 +1,6 @@
-# Basic Compiler
+# Luminia Compiler
 
-This is a basic compiler project that serves as a walk-through guide based on the book "Modern Compiler Implementation in Java" by Andrew W. Appel. The goal of this project is to provide a practical understanding of the various aspects of compiler design and implementation.
+This is a basic compiler project where i try and build my first compiler, this will mainly serve as a learning process
 
 ## Table of Contents
 
