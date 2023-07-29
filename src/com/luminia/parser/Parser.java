@@ -1,7 +1,5 @@
 package com.luminia.parser;
 
-import java.beans.Expression;
-
 import com.luminia.lexical_analysis.Lexer;
 import com.luminia.lexical_analysis.SyntaxToken;
 import com.luminia.lexical_analysis.SyntaxType;
