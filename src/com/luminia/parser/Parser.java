@@ -1,5 +1,7 @@
 package com.luminia.parser;
 
+import com.luminia.diagnostics.Diagnostics;
+import com.luminia.diagnostics.ReportType;
 import com.luminia.lexical_analysis.Lexer;
 import com.luminia.lexical_analysis.SyntaxToken;
 import com.luminia.lexical_analysis.SyntaxType;
@@ -63,10 +65,12 @@ public class Parser {
         if(this.current().getType() == type){
             return this.nextToken();
         }
+
+        Diagnostics.report("Unexpected token: " + this.current().getType() + " expected " + type, ReportType.Error, Parser.class);
         return new SyntaxToken(this.position, null, type, null);
     }
 
-    public ExpressionSyntax parse(){
+    private ExpressionSyntax parseExpression(){
 
         ExpressionSyntax left = parsePrimaryExpression();
 
@@ -77,6 +81,12 @@ public class Parser {
         }
 
         return left;
+    }
+
+    public SyntaxTree parse(){
+        ExpressionSyntax expression = this.parseExpression();
+        SyntaxToken eof = this.match(SyntaxType.EndOfFileToken);
+        return new SyntaxTree(expression, eof);
     }
 
     public String getText() {

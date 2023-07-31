@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+import com.luminia.diagnostics.Diagnostics;
+import com.luminia.diagnostics.ReportType;
+
 public class Lexer {
 
     private final String text;
@@ -50,8 +53,19 @@ public class Lexer {
             final int end = position;
             String text = this.text.substring(start, end);
 
-            int value = Integer.parseInt(text);
-            return new SyntaxToken(start, text, SyntaxType.NumberToken, value);
+            try{                
+                int value = Integer.parseInt(text);
+                return new SyntaxToken(start, text, SyntaxType.NumberToken, value);
+            }catch(Exception e){
+                if(text.startsWith("-")){
+                    Diagnostics.report("the value " + text + " cannot be represented as a " + SyntaxType.NumberToken + " and therefore has been truncated to " + Integer.MIN_VALUE, ReportType.Warning, Lexer.class);
+                    return new SyntaxToken(start, text, SyntaxType.NumberToken, Integer.MIN_VALUE);
+                }else{
+                    Diagnostics.report("the value " + text + " cannot be represented as a " + SyntaxType.NumberToken + " and therefore has been truncated to " + Integer.MAX_VALUE, ReportType.Warning, Lexer.class);
+                    return new SyntaxToken(start, text, SyntaxType.NumberToken, Integer.MAX_VALUE);
+                }
+
+            }
         }
 
         if(Character.isWhitespace(this.current())){
@@ -92,7 +106,8 @@ public class Lexer {
             }
         }
 
-        return new SyntaxToken(position++, text.substring(position - 1, 1), SyntaxType.BadToken, text);
+        Diagnostics.report("invalid token: " + this.current(), ReportType.Error, Lexer.class);
+        return new SyntaxToken(position++, text.substring(position - 1, text.length()), SyntaxType.BadToken, text);
 
     }
 
